@@ -6,14 +6,15 @@ import Inbox from './components/Inbox';
 import Account from './components/Account';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import PrivateRoute from './routes/PrivateRoute';
 
 function App() {
   return (
 	<BrowserRouter>
 		<Navigation />
 		<Route exact path='/' component={Landing} />
-		<Route exact path='/inbox' component={Inbox} />
-		<Route exact path='/account' component={Account} />
+		<PrivateRoute exact path='/inbox' component={Inbox} />
+		<PrivateRoute exact path='/account' component={Account} />
 		<Route exact path='/login' component={Login} />
 		<Route exact path='/signup' component={Signup} />
 	</BrowserRouter>

@@ -138,7 +138,7 @@ class Signup extends Component {
 					disabled={loading}
 				  >
 					{!loading && `Signup`}
-					{loading && <CircularProgress />}
+					{loading && <CircularProgress size={25} />}
 				  </Button>
 				</form>
 			  </div>
