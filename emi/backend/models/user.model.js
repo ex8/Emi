@@ -5,6 +5,14 @@ const jwt = require('jsonwebtoken');
 const keys = require('../config/keys');
 
 const userSchema = new Schema({
+    firstName: {
+        type: String,
+        required: true,
+    },
+    lastName: {
+        type: String,
+        required: true
+    },
     username: {
         type: String,
         required: true,
@@ -35,7 +43,10 @@ userSchema.pre(`save`, function(next) {
 userSchema.methods.generateJwt = function() {
     const payload = {
         id: this.id,
-        username: this.username
+        first_name: this.first_name,
+        last_name: this.last_name,
+        username: this.username,
+        created: this.created
     };
     return jwt.sign(payload, keys.secret, { expiresIn: `3h` });
 };

@@ -34,7 +34,7 @@ const Landing = () => {
                             </CardContent>
                         </CardActionArea>
                         <CardActions>
-                            <Button href="https://github.com/ex8/emi.io" size="small" color="primary">
+                            <Button href="https://github.com/ex8/emi" size="small" color="primary">
                                 Source Code
                             </Button>
                         </CardActions>

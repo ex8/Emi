@@ -56,6 +56,8 @@ const signup = (req, res) => {
         });
     }
     User.create({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
             username: req.body.username,
             password: req.body.password
         })
@@ -65,7 +67,7 @@ const signup = (req, res) => {
         }))
         .catch(err => res.json({
             success: false,
-            err: err
+            err
         }));
 };
 
