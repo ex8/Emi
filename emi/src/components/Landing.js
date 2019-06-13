@@ -25,12 +25,12 @@ const Landing = () => {
                     <Card className={classes.card}>
                         <CardActionArea>
                             <CardContent>
-                            <Typography gutterBottom variant="h5" component="h2">
-                                Encrypted Messaging Inbox
-                            </Typography>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                                Truthfully send one-way encoded messages that are destroyed once opened.
-                            </Typography>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                    Encrypted Messaging Inbox
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary" component="p">
+                                    Truthfully send one-way encoded messages that are destroyed once opened.
+                                </Typography>
                             </CardContent>
                         </CardActionArea>
                         <CardActions>
@@ -44,12 +44,12 @@ const Landing = () => {
                     <Card className={classes.card}>
                         <CardActionArea>
                             <CardContent>
-                            <Typography gutterBottom align="center" variant="h5" component="h3">
-                                Secure
-                            </Typography>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                                All messages are encrypted end-to-end and are terminated upon the recipient viewing the message.
-                            </Typography>
+                                <Typography gutterBottom align="center" variant="h5" component="h3">
+                                    Secure
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary" component="p">
+                                    All messages are encrypted end-to-end and are terminated upon the recipient viewing the message.
+                                </Typography>
                             </CardContent>
                         </CardActionArea>
                     </Card>

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardHeader, CardContent, CardActions, Avatar, IconButton, Typography, Tooltip } from '@material-ui/core';
 import { teal } from '@material-ui/core/colors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faReply, faEnvelopeOpenText } from '@fortawesome/free-solid-svg-icons';
+import { connect } from 'react-redux';
+import { resetSelectedMessage } from '../redux/actions/message.actions';
 
 const useStyles = makeStyles(theme => ({
     card: {
@@ -28,34 +30,61 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const MessageDetail = () => {
+const MessageDetail = ({ selectedMessage, resetSelectedMessage }) => {
   const classes = useStyles();
+  useEffect(() => resetSelectedMessage(), []);
+
+  const selected = (
+      <div>
+          <CardHeader
+            avatar={
+            <Avatar aria-label="Avatar" className={classes.avatar}>
+                <FontAwesomeIcon icon={faEnvelopeOpenText} />
+            </Avatar>
+            }
+            title={selectedMessage.uuid}
+            subheader={`${new Date(selectedMessage.created).toLocaleString()} from ${selectedMessage.user}`}
+        />
+        <CardContent>
+            <Typography variant="body2" color="textSecondary" component="p">
+                {selectedMessage.data}
+            </Typography>
+        </CardContent>
+      </div>
+  );
+
+  const unselected = (
+      <div>
+          <CardHeader
+            avatar={
+            <Avatar aria-label="Avatar" className={classes.avatar}>
+                
+            </Avatar>
+            }
+            title={''}
+            subheader={''}
+        />
+        <CardContent>
+            <Typography variant="body2" color="textSecondary" component="p">
+                No message selected.
+            </Typography>
+        </CardContent>
+      </div>
+  );
 
   return (
-	<Card className={classes.card}>
-		<CardHeader
-			avatar={
-			<Avatar aria-label="Avatar" className={classes.avatar}>
-				<FontAwesomeIcon icon={faEnvelopeOpenText} />
-			</Avatar>
-			}
-			title={'fff'}
-			subheader={'fff'}
-		/>
-		<CardContent>
-			<Typography variant="body2" color="textSecondary" component="p">
-				No message selected.
-			</Typography>
-		</CardContent>
-        <CardActions disableSpacing>
-			<Tooltip title="Reply" placement="bottom">
-			<IconButton aria-label="Reply">
-				<FontAwesomeIcon icon={faReply} />
-			</IconButton>
-			</Tooltip>
-		</CardActions>
-    </Card>
+      <Card className={classes.card}>
+        {Object.keys(selectedMessage).length !== 0 ? selected : unselected}
+      </Card>
   );
 };
 
-export default MessageDetail;
+const mapStateToProps = state => ({
+    selectedMessage: state.messageReducer.selectedMessage
+});
+
+const mapDispatchToProps = {
+    resetSelectedMessage
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessageDetail);

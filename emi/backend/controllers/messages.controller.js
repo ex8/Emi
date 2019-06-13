@@ -4,8 +4,9 @@ const User = require('../models/user.model');
 const list = (req, res) => {
     Message
         .find({ recipient: req.user.id })
-        .populate(`recipient`)
-        .populate(`user`)
+        .populate(`recipient`, `firstName lastName username created`)
+        .populate(`user`, `firstName lastName username created`)
+        .sort(`-created`)
         .then(messages => res.json({
             success: true,
             messages

@@ -5,14 +5,14 @@ import MessageDetail from './MessageDetail';
 import MessageForm from './MessageForm';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-  },
-  toolbar: theme.mixins.toolbar,
+	root: {
+		display: 'flex',
+	},
+	content: {
+		flexGrow: 1,
+		padding: theme.spacing(3),
+	},
+	toolbar: theme.mixins.toolbar,
 }));
 
 const Inbox = () => {
