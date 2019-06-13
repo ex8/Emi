@@ -1,4 +1,4 @@
-import { MESSAGES_REQUEST, MESSAGEs_SUCCESS, MESSAGES_FAILURE, SET_SELECTED_MESSAGE, RESET_SELECTED_MESSAGE, DELETE_MESSAGE } from '../types';
+import { MESSAGES_REQUEST, MESSAGES_SUCCESS, MESSAGES_FAILURE, SET_SELECTED_MESSAGE, RESET_SELECTED_MESSAGE, DELETE_MESSAGE } from '../types';
 import axios from 'axios';
 
 export const list = () => dispatch => {
@@ -10,7 +10,7 @@ export const list = () => dispatch => {
         .then(res => {
             if (res.data.success) {
                 dispatch({
-                    type: MESSAGEs_SUCCESS,
+                    type: MESSAGES_SUCCESS,
                     messages: res.data.messages,
                     loading: false
                 });

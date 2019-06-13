@@ -1,4 +1,4 @@
-import { MESSAGES_REQUEST, MESSAGEs_SUCCESS, MESSAGES_FAILURE, SET_SELECTED_MESSAGE, RESET_SELECTED_MESSAGE } from '../types';
+import { MESSAGES_REQUEST, MESSAGES_SUCCESS, MESSAGES_FAILURE, SET_SELECTED_MESSAGE, RESET_SELECTED_MESSAGE } from '../types';
 
 const INITIAL_STATE = {
     loading: true,
@@ -14,7 +14,7 @@ export default function(state=INITIAL_STATE, action) {
                 ...state,
                 loading: action.loading
             };
-        case MESSAGEs_SUCCESS:
+        case MESSAGES_SUCCESS:
             return {
                 ...state,
                 loading: action.loading,
