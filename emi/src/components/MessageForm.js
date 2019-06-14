@@ -16,8 +16,9 @@ import {
 import { Fab, Tooltip } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperPlane, faTimes } from '@fortawesome/free-solid-svg-icons';
-import Select from 'react-select';
 import UserSearchSelect from './UserSearchSelect';
+import { connect } from 'react-redux';
+import { send } from '../redux/actions/message.actions';
 
 const styles = theme => ({
 	appBar: {
@@ -56,7 +57,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 class MessageForm extends Component {
 	state = {
 		open: false,
-		recipient: '',
+		selectedRecipient: {},
 		isAnonymous: false,
 		message: ''
 	};
@@ -77,9 +78,31 @@ class MessageForm extends Component {
 		});
 	};
 
+	handleChangeSelected = selectedRecipient => {
+		this.setState({ selectedRecipient });
+	};
+
+	onFormSubmit = e => {
+		e.preventDefault();
+		const { message, isAnonymous, selectedRecipient } = this.state;
+		const { send, user } = this.props;
+		send({
+			message: message,
+			anonymous: isAnonymous,
+			recipient: selectedRecipient.value,
+			user: user.id
+		});
+		this.setState({
+			open: false,
+			selectedRecipient: {},
+			isAnonymous: false,
+			message: ''
+		});
+	}
+
 	render() {
 		const { classes } = this.props;
-		const { open, recipient, isAnonymous, message } = this.state;
+		const { open, selectedRecipient, isAnonymous, message } = this.state;
 		
 		return (
 			<div>
@@ -89,7 +112,7 @@ class MessageForm extends Component {
 					</Fab>
 				</Tooltip>
 				<Dialog fullScreen open={open} onClose={this.onClose} TransitionComponent={Transition}>
-					<form>
+					<form onSubmit={this.onFormSubmit}>
 						<AppBar className={classes.appBar}>
 							<Toolbar>
 								<IconButton edge="start" color="inherit" onClick={this.onClose} aria-label="Close">
@@ -99,7 +122,7 @@ class MessageForm extends Component {
 									Send Message
 								</Typography>
 								<Button type="submit" color="inherit" onClick={this.onClose}>
-									Send {recipient && 'to'} {recipient}
+									Send {selectedRecipient.username && 'to'} {selectedRecipient.username}
 								</Button>
 							</Toolbar>
 						</AppBar>
@@ -114,7 +137,10 @@ class MessageForm extends Component {
 								onChange={this.onInputChange}
 								autoFocus
 							/> */}
-							<UserSearchSelect />
+							<UserSearchSelect 
+								selectedRecipient={selectedRecipient} 
+								setSelectedRecipient={this.handleChangeSelected}
+							/>
 							<Tooltip title="The recpient will not know who sent this message." placement="right">
 								<FormControlLabel 
 									control={
@@ -162,4 +188,12 @@ class MessageForm extends Component {
 	};
 }
 
-export default withStyles(styles)(MessageForm);
+const mapStateToProps = state => ({
+	user: state.loginReducer.user
+});
+
+const mapDispatchToProps = {
+	send
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(MessageForm));

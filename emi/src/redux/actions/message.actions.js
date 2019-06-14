@@ -1,4 +1,12 @@
-import { MESSAGES_REQUEST, MESSAGES_SUCCESS, MESSAGES_FAILURE, SET_SELECTED_MESSAGE, RESET_SELECTED_MESSAGE, DELETE_MESSAGE } from '../types';
+import {
+    MESSAGES_REQUEST,
+    MESSAGES_SUCCESS,
+    MESSAGES_FAILURE,
+    SET_SELECTED_MESSAGE,
+    RESET_SELECTED_MESSAGE,
+    DELETE_MESSAGE,
+    SEND_MESSAGE
+} from '../types';
 import axios from 'axios';
 
 export const list = () => dispatch => {
@@ -35,7 +43,7 @@ export const setSelectedMessage = message => dispatch => {
         type: SET_SELECTED_MESSAGE,
         message
     });
-    // dispatch(deleteMessage(message));
+    dispatch(deleteMessage(message));
 };
 
 export const deleteMessage = message => dispatch => {
@@ -65,4 +73,25 @@ export const resetSelectedMessage = () => dispatch => {
         type: RESET_SELECTED_MESSAGE,
         selectedMessage: {}
     });
+};
+
+export const send = message => dispatch => {
+    axios.post(`/api/messages`, message)
+        .then(res => {
+            if (res.data.success) {
+                dispatch({
+                    type: SEND_MESSAGE
+                });
+            }
+            else {
+                dispatch({
+                    type: MESSAGES_FAILURE,
+                    errorMessage: res.data.err.errmsg
+                });
+            }
+        })
+        .catch(err => dispatch({
+            type: MESSAGES_FAILURE,
+            errorMessage: `Cannot send message...`
+        }));
 };

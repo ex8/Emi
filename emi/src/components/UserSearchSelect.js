@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import Select from 'react-select';
 import { emphasize, makeStyles, useTheme } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
-import MenuItem from '@material-ui/core/MenuItem';
+import { Typography, TextField, Paper, MenuItem } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { getRecipients } from '../redux/actions/recipient.actions';
 
 const suggestions = [
   { label: 'Afghanistan' },
@@ -194,14 +193,10 @@ const components = {
   ValueContainer,
 };
 
-const UserSearchSelect = () => {
+const UserSearchSelect = ({ getRecipients, recipients, selectedRecipient, setSelectedRecipient }) => {
 	const classes = useStyles();
 	const theme = useTheme();
-	const [selected, setSelected] = React.useState(null);
-
-	function handleChangeSelected(value) {
-		setSelected(value);
-	}
+	useEffect(() => getRecipients(), []);
 
 	const selectStyles = {
 		input: base => ({
@@ -226,14 +221,22 @@ const UserSearchSelect = () => {
 					shrink: true,
 				}
 			}}
-			options={suggestions}
+			options={recipients}
 			components={components}
-			value={selected}
-			onChange={handleChangeSelected}
+			value={selectedRecipient}
+			onChange={setSelectedRecipient}
 		/>
         <div className={classes.divider} />
     </div>
   );
 }
 
-export default UserSearchSelect;
+const mapStateToProps = state => ({
+	recipients: state.recipientReducer.recipients
+});
+
+const mapDispatchToProps = {
+	getRecipients
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserSearchSelect);
