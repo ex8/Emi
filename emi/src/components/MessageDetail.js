@@ -10,6 +10,7 @@ import { resetSelectedMessage } from '../redux/actions/message.actions';
 const useStyles = makeStyles(theme => ({
     card: {
         flex: 1,
+        whiteSpace: 'pre-line',
     },
     media: {
         height: 0,
@@ -51,6 +52,13 @@ const MessageDetail = ({ selectedMessage, resetSelectedMessage }) => {
                     {selectedMessage.data}
                 </Typography>
             </CardContent>
+            <CardActions>
+                <Tooltip title="Reply" placement="bottom">
+                    <IconButton aria-label="Reply">
+                        <FontAwesomeIcon icon={faReply} />
+                    </IconButton>
+                </Tooltip>
+            </CardActions>
         </div>
     );
 

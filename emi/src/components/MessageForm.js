@@ -42,7 +42,8 @@ const styles = theme => ({
 		marginTop: theme.spacing(6),
         display: 'block', // Fix IE 11 issue.
         marginLeft: theme.spacing(3),
-        marginRight: theme.spacing(3),
+		marginRight: theme.spacing(3),
+		whiteSpace: 'pre-line',
         [theme.breakpoints.up(600 + theme.spacing(6))]: {
             width: 600,
             marginLeft: 'auto',
@@ -66,7 +67,7 @@ class MessageForm extends Component {
 		open: false,
 		selectedRecipient: {},
 		isAnonymous: false,
-		message: ''
+		message: ``
 	};
 
 	onOpen = () => this.setState({ open: true });
@@ -103,7 +104,7 @@ class MessageForm extends Component {
 			open: false,
 			selectedRecipient: {},
 			isAnonymous: false,
-			message: ''
+			message: ``
 		});
 	}
 
