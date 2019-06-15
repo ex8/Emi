@@ -26,7 +26,7 @@ const add = (req, res) => {
     }
     Message.create({
             data: req.body.message,
-            anonymous: req.body.sendAnonymously,
+            anonymous: req.body.anonymous,
             recipient: req.body.recipient,
             user: req.body.user
         })

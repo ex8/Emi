@@ -11,14 +11,18 @@ import {
     TextField,
 	Checkbox,
 	FormControlLabel,
-	Paper
+	Avatar,
+	Card, 
+	CardHeader, 
+	CardContent
 } from '@material-ui/core';
 import { Fab, Tooltip } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPaperPlane, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane, faTimes, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import UserSearchSelect from './UserSearchSelect';
 import { connect } from 'react-redux';
 import { send } from '../redux/actions/message.actions';
+import { teal } from '@material-ui/core/colors';
 
 const styles = theme => ({
 	appBar: {
@@ -47,7 +51,10 @@ const styles = theme => ({
 	},
 	paper: {
 		padding: theme.spacing(3, 2)
-	}
+	},
+	avatar: {
+        backgroundColor: teal[500],
+    }
 });
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -101,7 +108,7 @@ class MessageForm extends Component {
 	}
 
 	render() {
-		const { classes } = this.props;
+		const { classes, user } = this.props;
 		const { open, selectedRecipient, isAnonymous, message } = this.state;
 		
 		return (
@@ -127,16 +134,6 @@ class MessageForm extends Component {
 							</Toolbar>
 						</AppBar>
 						<div className={classes.form}>
-							{/* <TextField
-								variant="outlined"
-								required
-								fullWidth
-								label="Send to"
-								name="recipient"
-								value={recipient}
-								onChange={this.onInputChange}
-								autoFocus
-							/> */}
 							<UserSearchSelect 
 								selectedRecipient={selectedRecipient} 
 								setSelectedRecipient={this.handleChangeSelected}
@@ -169,17 +166,22 @@ class MessageForm extends Component {
 							<Typography variant="h5">
 								Preview Message
 							</Typography>
-							<Paper className={classes.paper}>
-								<Typography variant="h6">
-									To: 
+							<Card>
+							<CardHeader
+								avatar={
+								<Avatar aria-label="Avatar" className={classes.avatar}>
+									<FontAwesomeIcon icon={faEnvelope} />
+								</Avatar>
+								}
+								title={`To: ${selectedRecipient.username}`}
+								subheader={`From: ${isAnonymous ? 'Anonymous' : user.username}`}
+							/>
+							<CardContent>
+								<Typography variant="body2" color="textSecondary" component="p">
+									{message}
 								</Typography>
-								<Typography variant="h6">
-									From: ex8
-								</Typography>
-								<Typography component="p">
-									message
-								</Typography>
-							</Paper>
+							</CardContent>
+							</Card>
 						</div>
 					</form>
 				</Dialog>

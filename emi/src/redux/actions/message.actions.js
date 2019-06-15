@@ -8,6 +8,8 @@ import {
     SEND_MESSAGE
 } from '../types';
 import axios from 'axios';
+import { encrypt, decrypt } from '../crypto';
+import { statement } from '@babel/template';
 
 export const list = () => dispatch => {
     dispatch({
@@ -39,9 +41,13 @@ export const list = () => dispatch => {
 };
 
 export const setSelectedMessage = message => dispatch => {
+    const m = {
+        ...message,
+        data: decrypt(message.data) 
+    };
     dispatch({
         type: SET_SELECTED_MESSAGE,
-        message
+        message: m
     });
     dispatch(deleteMessage(message));
 };
@@ -76,7 +82,11 @@ export const resetSelectedMessage = () => dispatch => {
 };
 
 export const send = message => dispatch => {
-    axios.post(`/api/messages`, message)
+    const m = {
+        ...message,
+        message: encrypt(message.message)
+    };
+    axios.post(`/api/messages`, m)
         .then(res => {
             if (res.data.success) {
                 dispatch({

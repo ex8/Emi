@@ -8,7 +8,7 @@ const messageSchema = new Schema({
         default: uuid()
     },
     data: {
-        type: String,
+        type: Object,
         required: true
     },
     created: {

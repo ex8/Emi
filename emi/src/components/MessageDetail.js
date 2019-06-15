@@ -31,52 +31,53 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const MessageDetail = ({ selectedMessage, resetSelectedMessage }) => {
-  const classes = useStyles();
-  useEffect(() => resetSelectedMessage(), []);
+    const classes = useStyles();
+    useEffect(() => resetSelectedMessage(), []);
+    const { created, anonymous, user } = selectedMessage;
 
-  const selected = (
-      <div>
-          <CardHeader
-            avatar={
-            <Avatar aria-label="Avatar" className={classes.avatar}>
-                <FontAwesomeIcon icon={faEnvelopeOpenText} />
-            </Avatar>
-            }
-            title={selectedMessage.uuid}
-            subheader={`${new Date(selectedMessage.created).toLocaleString()} from ${selectedMessage.user}`}
-        />
-        <CardContent>
-            <Typography variant="body2" color="textSecondary" component="p">
-                {selectedMessage.data}
-            </Typography>
-        </CardContent>
-      </div>
-  );
+    const selected = (
+        <div>
+            <CardHeader
+                avatar={
+                <Avatar aria-label="Avatar" className={classes.avatar}>
+                    <FontAwesomeIcon icon={faEnvelopeOpenText} />
+                </Avatar>
+                }
+                title={selectedMessage.uuid}
+                subheader={`${new Date(created).toLocaleString()} from ${anonymous ? 'Anonymous' : user}`}
+            />
+            <CardContent>
+                <Typography variant="body2" color="textSecondary" component="p">
+                    {selectedMessage.data}
+                </Typography>
+            </CardContent>
+        </div>
+    );
 
-  const unselected = (
-      <div>
-          <CardHeader
-            avatar={
-            <Avatar aria-label="Avatar" className={classes.avatar}>
-                
-            </Avatar>
-            }
-            title={''}
-            subheader={''}
-        />
-        <CardContent>
-            <Typography variant="body2" color="textSecondary" component="p">
-                No message selected.
-            </Typography>
-        </CardContent>
-      </div>
-  );
+    const unselected = (
+        <div>
+            <CardHeader
+                avatar={
+                <Avatar aria-label="Avatar" className={classes.avatar}>
+                    
+                </Avatar>
+                }
+                title={''}
+                subheader={''}
+            />
+            <CardContent>
+                <Typography variant="body2" color="textSecondary" component="p">
+                    No message selected.
+                </Typography>
+            </CardContent>
+        </div>
+    );
 
-  return (
-      <Card className={classes.card}>
-        {Object.keys(selectedMessage).length !== 0 ? selected : unselected}
-      </Card>
-  );
+    return (
+        <Card className={classes.card}>
+            {Object.keys(selectedMessage).length !== 0 ? selected : unselected}
+        </Card>
+    );
 };
 
 const mapStateToProps = state => ({

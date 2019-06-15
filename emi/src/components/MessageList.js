@@ -31,7 +31,7 @@ const MessageList = ({ messages, loading, list, setSelectedMessage }) => {
 	const classes = useStyles();
 	useEffect(() => list(), []);
 
-    const MessageListItem = ({ sender, sent, isAnonymous, message }) => {
+    const MessageListItem = ({ sender, created, isAnonymous, message }) => {
       return (
         <ListItem button onClick={() => setSelectedMessage(message)} >
           <ListItemAvatar>
@@ -39,7 +39,7 @@ const MessageList = ({ messages, loading, list, setSelectedMessage }) => {
             <FontAwesomeIcon icon={faEnvelope} />
           </Avatar>
           </ListItemAvatar>
-          <ListItemText primary={isAnonymous ? 'Anonymous' : sender.username} secondary={new Date(sent).toLocaleString()} />
+          <ListItemText primary={isAnonymous ? 'Anonymous' : sender.username} secondary={new Date(created).toLocaleString()} />
         </ListItem>
       );
     };
@@ -50,7 +50,7 @@ const MessageList = ({ messages, loading, list, setSelectedMessage }) => {
         <List>
 			{loading && <CircularProgress />}
 			{!loading && messages.map(m => {
-				return <MessageListItem key={m._id} sender={m.user} sent={m.created} isAnonymous={m.anonymous} message={m} />
+				return <MessageListItem key={m._id} sender={m.user} created={m.created} isAnonymous={m.anonymous} message={m} />
 			})}
         </List>
       </Drawer>
