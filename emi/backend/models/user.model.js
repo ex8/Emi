@@ -37,14 +37,14 @@ userSchema.pre(`save`, function(next) {
             this.password = hashed;
             next();
         });
-    })
+    });
 });
 
 userSchema.methods.generateJwt = function() {
     const payload = {
         id: this.id,
-        first_name: this.first_name,
-        last_name: this.last_name,
+        firstName: this.firstName,
+        lastName: this.lastName,
         username: this.username,
         created: this.created
     };
